@@ -41,7 +41,9 @@ namespace :test do
     path = File.basename(top_level)
     desc sprintf('run [%s] specific tests', path)
     task path.to_sym do
-      sh sprintf('%s/**/%s', top_level, TEST_NAME)
+      Dir.glob(sprintf('%s/**/%s', top_level, TEST_NAME)).each do |test|
+        sh test
+      end
     end
   end
 

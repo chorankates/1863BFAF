@@ -11,7 +11,9 @@ get '/meta' do
   Sinatra::Application.routes.each_pair do |request_type, paths|
     next if request_type.eql?('HEAD')
     paths.each do |route|
-      routes << route.first.to_s.gsub(/\W/, '').sub(/^mixA/, '').sub(/z$/, '')
+      method = route.first.to_s.gsub(/\W/, '').sub(/^mixA/, '').sub(/z$/, '')
+      next if method.eql?('meta')
+      routes << sprintf('http://localhost:4567/%s', method) # TODO abstract this
     end
   end
   routes.delete(__method__.to_s.split('/').last)
