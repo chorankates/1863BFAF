@@ -29,9 +29,9 @@ class TestNetHTTP < Test::Unit::TestCase
 
   # TODO need to not stop on first failure
   def test_all_the_things
-    @methods.each do |method|
+    @urls.each do |url|
       begin
-        response = get(sprintf('%s/%s', @server, method))
+        response = get(url)
         assert_not_nil(response)
         assert(200, response.code)
       rescue => e
