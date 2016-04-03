@@ -3,7 +3,7 @@ BASEDIR     = File.dirname(__FILE__)
 SERVER_PATH = 'bin/server.rb'
 TEST_NAME   = 'test.sh'
 
-task :default => 'test:all'
+task :default => 'test'
 
 namespace :server do
   desc 'run the sinatra server without tests'
@@ -23,6 +23,7 @@ namespace :server do
     end
   end
 end
+task :server => ['server:start']
 
 namespace :test do
   desc 'run all tests, starting and stopping the server'
@@ -38,14 +39,25 @@ namespace :test do
   end
 
   Dir.glob(sprintf('%s/test/*', BASEDIR)).each do |top_level|
+    failed = Array.new
     path = File.basename(top_level)
     desc sprintf('run [%s] specific tests', path)
     task path.to_sym do
       Dir.glob(sprintf('%s/**/%s', top_level, TEST_NAME)).each do |test|
-        sh test
+        begin
+          sh test
+        rescue => e
+          puts sprintf('test[%s/%s] failed[%s], going to next test', top_level, test, e.message)
+          failed << sprintf('%s/%s', top_level, test)
+        end
+
       end
+
+      # TODO figure out how to care about overall success/failure for exit codes
+      puts sprintf('failed[%s] tests[%s]', failed.size, failed) unless failed.empty?
+
     end
   end
 
 end
-
+task :test => ['test:all']
