@@ -1,8 +1,15 @@
 #!/bin/bash
 # h/t http://stackoverflow.com/a/10586169
 
-echo 'running curl tests'
+# dependencies check
+if [ -z `which curl` ]; then
+  echo "ERROR: unable to find 'curl' in \$PATH, skipping"
+  exit 0
+else
+  echo 'running curl tests'
+fi
 
+# test definition/execution
 ROUTES=`curl -s http://localhost:4567/meta`
 EC=$?
 if [ ${EC} != 0 ]; then

@@ -1,8 +1,15 @@
 #!/bin/bash
 # h/t http://stackoverflow.com/a/10586169
 
-echo 'running wget tests'
+# dependencies check
+if [ -z `which python` ]; then
+  echo "ERROR: unable to find 'curl' in \$PATH, skipping"
+  exit 0
+else
+  echo 'running wget tests'
+fi
 
+# test definition/execution
 ROUTES=`wget -qO- http://localhost:4567/meta`
 EC=$?
 if [ ${EC} != 0 ]; then
