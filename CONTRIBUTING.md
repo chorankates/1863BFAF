@@ -1,5 +1,6 @@
 additional languages/binaries to be tested are welcomed. fork this repository, make your changes and send us a PR with:
   * 0755 permissions `test.sh` in `test/<language>/<library>/`
+  * update of the 'tests' table in `README.md`
 
 `test.sh` is the entry point for 1863BFAF, and should trigger your language/binary to:
   * call `http://localhost:4567/meta` to receive list of API routes to call (JSON array)
