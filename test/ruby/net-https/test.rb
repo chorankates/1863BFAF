@@ -19,10 +19,10 @@ class TestNetHTTP < Test::Unit::TestCase
     @meta_url = sprintf('%s/meta', @server)
 
     begin
-      raw      = get(@meta_url)
-      @methods = JSON.parse(raw.body)
+      raw   = get(@meta_url)
+      @urls = JSON.parse(raw.body)
     rescue => e
-      fail(sprintf('server not running; try rake server, exception[%s]', e.message)) if @methods.nil? or @methods.empty?
+      fail(sprintf('server not running; try rake server, exception[%s]', e.message)) if @urls.nil? or @urls.empty?
     end
 
   end
@@ -33,9 +33,10 @@ class TestNetHTTP < Test::Unit::TestCase
       begin
         response = get(url)
         assert_not_nil(response)
-        assert(200, response.code)
+        assert_equal('200', response.code)
       rescue => e
-        fail(sprintf('caught an exception[%s] calling [%s]', e.message, method))
+        # TODO this is showing up as an error, not a failure.. 
+        fail(sprintf('caught an exception[%s] calling [%s]', e.message, url))
       end
     end
   end
