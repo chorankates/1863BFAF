@@ -23,8 +23,18 @@ ruby         | `net-http`       | `2.2.2`  | no       | (number) `wrong status l
 
 ## running tests yourself
 
+the entrypoint to all tests is `test/<language>/<library>/test.sh` which does some dependency checking and exits with 0 to avoid false positives.
+
+most developer machines will already have all pre-requisites
+
 ```
 $ git clone https://github.com/chorankates/1863BFAF.git
 $ cd 1836BFAF
+$ rake test:ruby
+...
+$ rake test:perl test:java
+...
 $ rake test
 ```
+
+the rake tasks start a basic WEBrick server and then executes every relevant `test.sh` file
