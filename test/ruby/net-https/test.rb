@@ -26,19 +26,25 @@ class TestNetHTTP < Test::Unit::TestCase
     end
 
   end
-
-  # TODO need to not stop on first failure
+  
   def test_all_the_things
+
+    failures = Array.new
+
     @urls.each do |url|
       begin
         response = get(url)
         assert_not_nil(response)
         assert_equal('200', response.code)
       rescue => e
-        # TODO this is showing up as an error, not a failure.. 
-        fail(sprintf('caught an exception[%s] calling [%s]', e.message, url))
+        # TODO this is showing up as an error, not a failure..
+        failures << sprintf('caught an exception[%s] calling [%s]', e.message, url)
+        #fail(sprintf('caught an exception[%s] calling [%s]', e.message, url))
       end
     end
+
+    fail(sprintf('failed[%s] tests [%s]', failures.size, failures.join("\n"))) unless failures.empty?
+
   end
 
 end
