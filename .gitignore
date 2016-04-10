@@ -2,3 +2,6 @@
 # jetbrains shenanigans
 .idea/*
 *.iml
+
+# compiled
+*.class
