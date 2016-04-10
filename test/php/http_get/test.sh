@@ -1,7 +1,7 @@
 #!/bin/bash
 # dependencies check
 if [ -z `which php` ]; then
-  echo "ERROR: unable to find 'curl' in \$PATH, skipping"
+  echo "ERROR: unable to find 'php' in \$PATH, skipping"
   exit 0
 fi
 

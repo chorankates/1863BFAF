@@ -1,7 +1,7 @@
 #!/bin/bash
 # dependencies check
 if [ -z `which ruby` ]; then
-  echo "ERROR: unable to find 'curl' in \$PATH, skipping"
+  echo "ERROR: unable to find 'ruby' in \$PATH, skipping"
   exit 0
 fi
 
