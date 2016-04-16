@@ -3,5 +3,8 @@
 .idea/*
 *.iml
 
+# compiled artifacts
+test/**/.*.java
+
 # compiled
 *.class

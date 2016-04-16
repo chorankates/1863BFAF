@@ -21,6 +21,16 @@ public class Test {
     {
         String meta = getHTML("http://localhost:4567/meta");
         System.out.println(meta);
+
+        // split on , strip quotes and iterate
+        String[] results = meta.split(",");
+
+        for (String result : results) {
+            String lresult  = result.toString().replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"", "");
+            String response = getHTML(lresult);
+            System.out.println("url:[" + lresult + "] response[" + response + "]");
+        }
+
     }
 
 }
