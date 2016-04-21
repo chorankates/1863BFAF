@@ -1,8 +1,10 @@
+package com.test;
+
 import java.io.*;
 import java.lang.reflect.Array;
 import java.net.*;
 
-public class Test {
+public class HttpTest {
     public static String getHTML(String urlToRead) throws Exception {
         StringBuilder result = new StringBuilder();
         URL url = new URL(urlToRead);
@@ -14,6 +16,16 @@ public class Test {
             result.append(line);
         }
         rd.close();
+
+        if (url.toString().matches(".*numbers$")) {
+            if (result.toString().isEmpty()) { // TODO match on the response code being \d+
+                System.err.println("java.net/HttpURLConnection is conflating response code and body, but in a particularly stange way"); // nice consistency on the class casing..
+                System.err.println("request url[" + url.toString() + "]");
+                System.err.println("response body[" + result.toString() + "]");
+                System.err.println("response code[" + conn.getResponseCode() + "]");
+                System.exit(1);
+            }
+        }
         return result.toString();
     }
 
