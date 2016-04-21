@@ -14,6 +14,7 @@ language     | library          | version  | success? | context
 -------------|------------------|----------|----------|---------
 binary       | `curl`           | `7.37.1` | yes      |
 binary       | `wget`           | `1.15 `  | no       | (number) `ERROR -1: Malformed status line.`, additionally: reported with exit code 4, 'Network failure.'
+java         | `java.net.UrlHTTPConnection` | yes/no  | (number) body is conflated as HTTP status code, that even when invalid, no error is raised - so we raise our own
 perl         | `HTTP::Tiny`     | `5.10.0` | no       | (number) `ERROR: 599`
 perl         | `LWP::UserAgent` | `5.10.0` | yes      |
 php          | `http_get`       | `5.5.14` | no       | (number) <unknown, bug in reporting>
