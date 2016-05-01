@@ -6,10 +6,11 @@ rvm:
 # need to be able to install packages
 sudo: true
 
-# check for presence perl, php, python, java and.. curl/wget
+# check/report on presence of java, perl, php, python and curl/wget
 before_install:
+  # looks like we have everything except php
+  - sudo apt-get install php5
   - ruby resources/explore_travis.rb
-
 
 notifications:
   email: false
