@@ -77,6 +77,9 @@ $ echo $?
 
 ### from-source installation (latest)
 
+[![build status](https://travis-ci.org/chorankates/1863BFAF.svg)](https://travis-ci.org/chorankates/1863BFAF)
+
+
 ```sh
 $ git clone https://github.com/chorankates/1863BFAF.git
 $ cd 1836BFAF
