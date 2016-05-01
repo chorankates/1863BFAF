@@ -9,11 +9,11 @@ sudo: true
 # check for presence perl, php, python, java and.. curl/wget
 before_install:
   - which perl
-  - which php
-  - which python
-  - which java
-  - which curl
-  - which wget
+  - which php; exit 0
+  - which python; exit 0
+  - which java; exit 0
+  - which curl; exit 0
+  - which wget; exit 0
 
 notifications:
   email: false
