@@ -17,8 +17,9 @@ binary = [
 
 binary.each do |b|
   begin
-    raw = `which #{b}`
-    context << { :type => :binary, :binary => b, :context => raw }
+    which   = `which #{b}`
+    version = sprintf('%s -v', b)
+    context << { :type => :binary, :binary => b, :context => { :which => which, :version => version } }
   rescue => e
     failures << { :type => :binary, :binary => b, :context => e.message }
   end
