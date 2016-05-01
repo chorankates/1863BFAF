@@ -1,16 +1,31 @@
+require 'rake/clean'
+require 'socket'
+require 'find'
+
+CLEAN.include('*.class')
 
 BASEDIR     = File.dirname(__FILE__)
 SERVER_PATH = 'bin/server.rb'
 TEST_NAME   = 'test.sh'
+
+def port_closed?(port = 4567, ip = 'localhost')
+  begin
+    TCPSocket.new(ip, port).close
+    false
+  rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+    true
+  end
+end
 
 task :default => 'test'
 
 namespace :server do
   desc 'run the sinatra server without tests'
   task :start => ['server:stop'] do
-    # TODO fix this..
-    #sh sprintf('ruby %s/bin/server.rb &; bg; jobs', BASEDIR)
-    sh sprintf('ruby %s/%s; jobs', BASEDIR, SERVER_PATH)
+    job = fork do
+      exec sprintf('ruby %s/%s', BASEDIR, SERVER_PATH)
+    end
+    Process.detach(job)
   end
 
   # TODO how do we get this to execute after tests are run? .. can do forward dependencies, but not reverse.. maybe a meta task that 'server:start', 'test:all', 'server:stop'
@@ -19,22 +34,28 @@ namespace :server do
     begin
       sh sprintf('killall ruby %s/%s', BASEDIR, SERVER_PATH)
     rescue RuntimeError => e
-      #printf('server does not appear to be running, noop')
+      printf('server does not appear to be running, noop')
     end
   end
 end
 task :server => ['server:start']
 
 namespace :test do
-  desc 'run all tests, starting and stopping the server'
-  task :all => ['server:start', 'test:run_all', 'server:stop']
 
   # meta task, not giving a description
-  task :run_all do
-    Dir.glob(sprintf('%s/*', BASEDIR)) do |file|
+  task :all do
+    if port_closed?
+      puts 'local server not running; run `rake server`'
+      exit(2)
+    end
+    Find.find(sprintf('%s/test', BASEDIR)) do |file|
       next unless File.file?(file)
       next unless File.basename(file).eql?(TEST_NAME)
-      sh file
+      begin
+        sh file
+      rescue => e
+        sprintf('test [%s] failed with [%s], running next test', file, e.message)
+      end
     end
   end
 
