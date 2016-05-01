@@ -8,15 +8,11 @@ sudo: true
 
 # check for presence perl, php, python, java and.. curl/wget
 before_install:
-  - which perl
-  - which php; exit 0
-  - which python; exit 0
-  - which java; exit 0
-  - which curl; exit 0
-  - which wget; exit 0
+  - ruby resources/explore_travis.rb
 
 notifications:
   email: false
 
 bundler_args: --without test --jobs 3 --retry 3
-script: bundle exec rake test reek build
+# TODO this is wrong.. i think we should just call the 1863BFAF binary for tests
+script: bundle exec rake test build
