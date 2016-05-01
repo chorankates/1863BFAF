@@ -29,9 +29,11 @@ end
 
 ```
 
-and when trying to test it with `wget http://localhost:4567/api/baz`, were seeing unexpected results to seemingly innocuous HTTP requests..
+and when trying to test it with `wget --post-data 'fizz=buzz' http://localhost:4567/api/baz`, were seeing unexpected results to seemingly innocuous HTTP requests..
 
-so we tried `curl http://localhost:4567/api/baz`, didn't have the same problem, and kept moving forward with the POC.
+wget -O- --post-data='{"some data to post..."}' --header=Content-Type:application/json "http://www.example.com:9000/json"
+
+so we tried `curl -d fizz=buzz -X POST http://localhost:4567/api/baz`, didn't have the same problem, and kept moving forward with the POC.
 
 but something was wrong - and for ~once, it wasn't our code.
 
