@@ -1,7 +1,6 @@
 #!/bin/bash
-echo foo
-exit
 
-rake server:stop # hacky..
-ruby server.rb &
+# SOOOOO HACKY
+rake server &
+sleep 15
 rake test
