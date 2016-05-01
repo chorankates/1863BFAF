@@ -63,6 +63,7 @@ the entry point to all* tests is `test/<language>/<library>/test.sh` which does 
 most developer machines will already have all pre-requisites
 
 \* for tests that use binary files directly, the expected path changes to `test/binary/<binary>/tet.sh`
+=======
 
 ```sh
 $ git clone https://github.com/chorankates/1863BFAF.git
