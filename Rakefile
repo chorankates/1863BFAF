@@ -4,9 +4,10 @@ require 'rake/clean'
 require 'socket'
 
 CLEAN.include('*.class')
+CLOBBER.include('pkg/*')
 
 BASEDIR     = File.dirname(__FILE__)
-SERVER_PATH = 'bin/server.rb'
+SERVER_PATH = 'resources/server.rb'
 TEST_NAME   = 'test.sh'
 
 Jeweler::Tasks.new do |gem|

@@ -1,6 +1,8 @@
 #!/usr/bin/ruby
 ## server.rb - sinatra routes to be used for testing
 
+# TODO this should probably be in resources/ or something other than bin/ now that we're packaging as a gem
+
 require 'json'
 require 'sinatra'
 

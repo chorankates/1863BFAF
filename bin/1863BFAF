@@ -1,3 +1,7 @@
 #!/bin/bash
+echo foo
+exit
+
+rake server:stop # hacky..
 ruby server.rb &
 rake test
