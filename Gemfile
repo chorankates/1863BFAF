@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 group :development do
   gem 'jeweler', '~> 2.0', '>= 2.0.4'
+  gem 'travis', '~> 1.8', '>= 1.8.2'
 end
 
 gem 'rake', '~> 10.4', '>= 10.4.2'

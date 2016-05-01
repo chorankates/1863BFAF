@@ -102,3 +102,11 @@ namespace :test do
 
 end
 task :test => ['test:all']
+
+
+namespace :lint do
+  desc 'validates .travis.yml contents'
+  task :travis do
+    sh 'travis lint .travis.yml'
+  end
+end
