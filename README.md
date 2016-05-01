@@ -29,7 +29,11 @@ end
 
 ```
 
-and when trying to test it with `wget http://localhost:4567/api/baz`, were seeing unexpected results to seemingly innocuous HTTP request.. so we tried `curl http://localhost:4567/api/baz`, didn't have the same problem, and kept moving forward with the POC. but something was wrong - and for ~once, it wasn't our code.
+and when trying to test it with `wget http://localhost:4567/api/baz`, were seeing unexpected results to seemingly innocuous HTTP requests..
+
+so we tried `curl http://localhost:4567/api/baz`, didn't have the same problem, and kept moving forward with the POC.
+
+but something was wrong - and for ~once, it wasn't our code.
 
 # what is the problem?
 
@@ -44,7 +48,7 @@ binary       | `curl`           | `7.37.1` | N/A | yes       |
 binary       | `wget`           | `1.15`   | N/A | no        | (number) `ERROR -1: Malformed status line.`, additionally: reported with exit code 4, 'Network failure.'
 java         | `java.net.UrlHTTPConnection` | `1.7` | `1.7` | yes/no  | (number) body is conflated as HTTP status code, that even when invalid, no error is raised - so we raise our own
 perl         | `HTTP::Tiny`     | `5.10.0`,  `5.18.2` | `0.025` | no       | (number) `ERROR: 599`
-perl         | `LWP::UserAgent` | `5.10.0`. `5.18.2` | `6.05` | yes      |
+perl         | `LWP::UserAgent` | `5.10.0`, `5.18.2` | `6.05` | yes      |
 php          | `http_get`       | `5.5.14` | `468225` | no       | (number) <unknown, bug in reporting>
 python       | `httplib2`       | `2.7.5`  | `2.7.5` | no       | (number) `BadStatusLine: HTTP/1.1 36`
 python       | `urllib2`        | `2.7.5`  | `2.7`   | no       | (number) `BadStatusLine: HTTP/1.1 16`
@@ -58,12 +62,13 @@ the entry point to all* tests is `test/<language>/<library>/test.sh` which does 
 
 most developer machines will already have all pre-requisites
 
-\* tests that use binary files directly, the expected path changes to `test/binary/<binary>/tet.sh`
+\* for tests that use binary files directly, the expected path changes to `test/binary/<binary>/tet.sh`
 
 ```
 $ git clone https://github.com/chorankates/1863BFAF.git
 $ cd 1836BFAF
 $ rake server
+...
 $ rake test
 ...
 $ rake test:perl test:java
