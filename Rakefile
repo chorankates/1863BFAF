@@ -48,15 +48,22 @@ namespace :test do
       puts 'local server not running; run `rake server`'
       exit(2)
     end
+
+    failed = Array.new
     Find.find(sprintf('%s/test', BASEDIR)) do |file|
       next unless File.file?(file)
       next unless File.basename(file).eql?(TEST_NAME)
       begin
         sh file
       rescue => e
-        sprintf('test [%s] failed with [%s], running next test', file, e.message)
+        puts sprintf('test [%s] failed with [%s], running next test', file, e.message)
+        failed << File.dirname(file).gsub(File.dirname(__FILE__), '').gsub('/test/', '')
       end
     end
+
+    puts sprintf('failed[%s]%stests[%s]', failed.size, "\n", failed.join("\n")) unless failed.empty?
+
+    Kernel.exit(failed.empty? ? 1 : 0)
   end
 
   Dir.glob(sprintf('%s/test/*', BASEDIR)).each do |top_level|
@@ -69,14 +76,12 @@ namespace :test do
           sh test
         rescue => e
           puts sprintf('test[%s/%s] failed[%s], going to next test', top_level, test, e.message)
-          failed << sprintf('%s/%s', top_level, test)
+          failed << File.dirname(test).gsub(File.dirname(__FILE__), '').gsub('test/', '')
         end
 
       end
 
-      # TODO figure out how to care about overall success/failure for exit codes
-      puts sprintf('failed[%s] tests[%s]', failed.size, failed) unless failed.empty?
-
+      puts sprintf('failed[%s] tests[%s]', failed.size, failed.join("\n")) unless failed.empty?
     end
   end
 

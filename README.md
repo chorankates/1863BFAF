@@ -5,7 +5,7 @@ apparently we're the RFC police.
 
 # storytime
 
-we found this problem while writing some exploratory Ruby code using Sinatra and Sequel, initially it boiled down to:
+we found this problem while writing some exploratory Ruby code using Sinatra and Sequel, which boiled down to:
 ```rb
 require 'sequel'
 require 'sinatra'
@@ -64,15 +64,29 @@ most developer machines will already have all pre-requisites
 
 \* for tests that use binary files directly, the expected path changes to `test/binary/<binary>/tet.sh`
 
-```
+```sh
 $ git clone https://github.com/chorankates/1863BFAF.git
 $ cd 1836BFAF
 $ rake server
-...
+== Sinatra (v1.4.7) has taken the stage on 4567 for development with backup from WEBrick
 $ rake test
 ...
+failed[7]
+tests[
+binary/wget
+java/java.net
+perl/httptiny
+php/http_get
+python/httplib2
+python/urllib2
+ruby/net-https]
+$ echo $?
+0
 $ rake test:perl test:java
 ...
-$ rake test:ruby
+$ echo $?
+0
 ...
+$ rake server:stop
+== Sinatra has ended his set (crowd applauds)
 ```
