@@ -1,10 +1,9 @@
 
 # jetbrains shenanigans
 .idea/*
-*.iml
-
-# compiled artifacts
-test/**/.*.java
 
 # compiled
-*.class
+test/**/*.class
+
+# generated
+pkg/*

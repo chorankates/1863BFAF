@@ -1,12 +1,26 @@
+require 'find'
+require 'jeweler'
 require 'rake/clean'
 require 'socket'
-require 'find'
 
 CLEAN.include('*.class')
 
 BASEDIR     = File.dirname(__FILE__)
 SERVER_PATH = 'bin/server.rb'
 TEST_NAME   = 'test.sh'
+
+Jeweler::Tasks.new do |gem|
+  gem.name        = '1863BFAF'
+  gem.summary     = 'validate RFC2616 (HTTP 1.1) compliance'
+  gem.description = 'attempts to poke at the edges of valid HTTP responses wrt HTTP 1.1'
+  gem.email       = 'conor.code@gmail.com'
+  gem.homepage    = 'http://github.com/chorankates/1863BFAF'
+  gem.authors     = ['Conor Horan-Kates', 'Maureen Long']
+  gem.licenses    =  'MIT'
+
+  gem.bindir = 'bin/'
+end
+Jeweler::RubygemsDotOrgTasks.new
 
 def port_closed?(port = 4567, ip = 'localhost')
   begin

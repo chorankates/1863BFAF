@@ -1,0 +1,2 @@
+rake server:start
+rake test

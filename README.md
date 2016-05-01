@@ -64,9 +64,24 @@ most developer machines will already have all pre-requisites
 
 \* for tests that use binary files directly, the expected path changes to `test/binary/<binary>/test.sh`
 
+### pre-built gem installation (stable)
+
+[![Gem Version](https://badge.fury.io/rb/1863BFAF.png)](https://rubygems.org/gems/1863BFAF)
+
+```sh
+$ gem install 1863BFAF
+...
+$ echo $?
+0
+```
+
+### from-source installation (latest)
+
 ```sh
 $ git clone https://github.com/chorankates/1863BFAF.git
 $ cd 1836BFAF
+$ bundle install
+...
 $ rake server
 == Sinatra (v1.4.7) has taken the stage on 4567 for development with backup from WEBrick
 $ rake test
