@@ -1,0 +1,22 @@
+language: ruby
+
+rvm:
+  - 2.2.2 # this is what 1863BFAF itself runs on
+
+# need to be able to install packages
+sudo: true
+
+# check for presence perl, php, python, java and.. curl/wget
+before_install:
+  - which perl
+  - which php
+  - which python
+  - which java
+  - which curl
+  - which wget
+
+notifications:
+  email: false
+
+bundler_args: --without test --jobs 3 --retry 3
+script: bundle exec rake test reek build
