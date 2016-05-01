@@ -1,41 +1,73 @@
 # 1863BFAF
 apparently we're the RFC police.
 
-1863BFAF is a project to validate adherence to HTTP/1.1 (RFC 2616)
+1863BFAF is a project to validate adherence to HTTP/1.1 as defined by [RFC2616](https://www.ietf.org/rfc/rfc2616.txt)
 
 # storytime
 
+we found this problem while writing some exploratory Ruby code using Sinatra and Sequel, initially it boiled down to:
+```rb
+require 'sequel'
+require 'sinatra'
+
+# model
+class Foo < Sequel::Model
+...
+end
+
+# database
+db = Sequel.connect('sqlite://test.db')
+db.create_table? :bar do
+  primary_key :id
+  String :name
+end
+
+# routes
+post '/api/baz' do
+  db[:foo].insert(params['fizz'])
+end
+
+```
+
+and when trying to test it with `wget http://localhost:4567/api/baz`, were seeing unexpected results to seemingly innocuous HTTP request.. so we tried `curl http://localhost:4567/api/baz`, didn't have the same problem, and kept moving forward with the POC. but something was wrong - and for ~once, it wasn't our code.
+
 # what is the problem?
 
-(usually) regular expressions/parsing mechanisms that do not strictly follow the RFC
+(presumed/usually) regular expressions/parsing mechanisms that do not strictly follow RFC2616.
+
+and less apocalyptically: Sinatra was following Ruby standards and returning the result of the last line of the route method - which in our case was the ID of the entry in the DB
 
 # tests
-language     | library          | version  | success? | context
--------------|------------------|----------|----------|---------
-binary       | `curl`           | `7.37.1` | yes      |
-binary       | `wget`           | `1.15 `  | no       | (number) `ERROR -1: Malformed status line.`, additionally: reported with exit code 4, 'Network failure.'
-java         | `java.net.UrlHTTPConnection` | `1.7` | yes/no  | (number) body is conflated as HTTP status code, that even when invalid, no error is raised - so we raise our own
-perl         | `HTTP::Tiny`     | `5.10.0` | no       | (number) `ERROR: 599`
-perl         | `LWP::UserAgent` | `5.10.0` | yes      |
-php          | `http_get`       | `5.5.14` | no       | (number) <unknown, bug in reporting>
-python       | `httplib2`       | `2.7`    | no       | (number) `BadStatusLine: HTTP/1.1 36`
-python       | `urllib2`        | `2.7`    | no       | (number) `BadStatusLine: HTTP/1.1 16`
-ruby         | `net-http`       | `2.2.2`  | no       | (number) `wrong status line: "HTTP/1.1 40  "`
+language     | library          | language version | library version  | success? | context
+-------------|------------------|------------------|------------------|----------|---------
+binary       | `curl`           | `7.37.1` | N/A | yes       |
+binary       | `wget`           | `1.15`   | N/A | no        | (number) `ERROR -1: Malformed status line.`, additionally: reported with exit code 4, 'Network failure.'
+java         | `java.net.UrlHTTPConnection` | `1.7` | `1.7` | yes/no  | (number) body is conflated as HTTP status code, that even when invalid, no error is raised - so we raise our own
+perl         | `HTTP::Tiny`     | `5.10.0`,  `5.18.2` | `0.025` | no       | (number) `ERROR: 599`
+perl         | `LWP::UserAgent` | `5.10.0`. `5.18.2` | `6.05` | yes      |
+php          | `http_get`       | `5.5.14` | `468225` | no       | (number) <unknown, bug in reporting>
+python       | `httplib2`       | `2.7.5`  | `2.7.5` | no       | (number) `BadStatusLine: HTTP/1.1 36`
+python       | `urllib2`        | `2.7.5`  | `2.7`   | no       | (number) `BadStatusLine: HTTP/1.1 16`
+ruby         | `net-http`       | `2.2.2`  | `2.2.2` | no       | (number) `wrong status line: "HTTP/1.1 40  "`
+
+`599`, `36`, `16` and `40` are not error codes returned by the library/binary, but the random number returned by our `number` route
 
 ## running tests yourself
 
-the entrypoint to all tests is `test/<language>/<library>/test.sh` which does some dependency checking and exits with 0 to avoid false positives.
+the entry point to all* tests is `test/<language>/<library>/test.sh` which does some dependency checking and exits with 0 to avoid false positives.
 
 most developer machines will already have all pre-requisites
+
+\* tests that use binary files directly, the expected path changes to `test/binary/<binary>/tet.sh`
 
 ```
 $ git clone https://github.com/chorankates/1863BFAF.git
 $ cd 1836BFAF
-$ rake test:ruby
+$ rake server
+$ rake test
 ...
 $ rake test:perl test:java
 ...
-$ rake test
+$ rake test:ruby
+...
 ```
-
-the rake tasks start a basic WEBrick server and then executes every relevant `test.sh` file
