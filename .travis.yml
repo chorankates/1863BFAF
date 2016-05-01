@@ -18,4 +18,4 @@ notifications:
 bundler_args: --without test --jobs 3 --retry 3
 # TODO this is temporary, still working it out
 #script: bundle exec rake test build
-script: 1863BFAF; rake build
+script: bin/1863BFAF; rake build
