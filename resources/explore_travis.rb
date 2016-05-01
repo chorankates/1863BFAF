@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 # explore_travis ... explores the travis-ci.org sudo environment in order to support our multiple language needs
+require 'pp'
 
 failures = Array.new
-context  = Hash.new
+context  = Array.new
 
 binary = [
   'java',
@@ -22,3 +23,7 @@ binary.each do |b|
     failures << { :type => :binary, :binary => b, :context => e.message }
   end
 end
+
+pp sprintf('context[%s]', context)
+pp sprintf('failures[%s]', failures)
+
