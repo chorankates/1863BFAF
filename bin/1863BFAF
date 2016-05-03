@@ -1,12 +1,14 @@
 #!/usr/bin/env ruby
 
 # SOOOOO HACKY
-begin
-  printf('starting server..%s', "\n")
-  `rake server &`
-rescue => r
-  sh sprintf('echo something is very wrong[%s] [%s]', r.class, r.message)
-end
+`ruby resources/server.rb`
+
+#begin
+#  printf('starting server..%s', "\n")
+#  `rake server &`
+#rescue => r
+#  sh sprintf('echo something is very wrong[%s] [%s]', r.class, r.message)
+#end
 
 printf('sleeping 15 for start..%s', "\n")
 `sleep 15`
