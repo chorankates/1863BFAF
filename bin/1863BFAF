@@ -1,6 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
 # SOOOOO HACKY
-rake server &
-sleep 15
-rake test
+begin
+  printf('starting server..%s', "\n")
+  `rake server &`
+  rescue
+  end
+end
+
+printf('sleeping 15 for start..%s', "\n")
+`sleep 15`
+
+printf('running tests..%s', "\n")
+`rake test`
+
+printf('stopping server..%s', "\n")
+`rake server:stop`
