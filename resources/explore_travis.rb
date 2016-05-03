@@ -9,7 +9,7 @@ binary = [
   #'java',
   'perl',
   'php',
-  'python',
+  #'python',
   'ruby',
   'curl',
   'wget',
