@@ -4,8 +4,8 @@
 begin
   printf('starting server..%s', "\n")
   `rake server &`
-  rescue
-  end
+rescue => r
+  sh sprintf('echo something is very wrong[%s] [%s]', r.class, r.message)
 end
 
 printf('sleeping 15 for start..%s', "\n")
