@@ -6,7 +6,7 @@ failures = Array.new
 context  = Array.new
 
 binary = [
-  'java',
+  #'java',
   'perl',
   'php',
   'python',
