@@ -1,8 +1,6 @@
 #!/usr/bin/ruby
 ## server.rb - sinatra routes to be used for testing
 
-# TODO this should probably be in resources/ or something other than bin/ now that we're packaging as a gem
-
 require 'json'
 require 'sinatra'
 
@@ -15,6 +13,7 @@ get '/meta' do
     paths.each do |route|
       method = route.first.to_s.gsub(/\W/, '').sub(/^mixA/, '').sub(/z$/, '')
       next if method.eql?('meta')
+      # TODO we need to return.. the hostname we were called with, not necessarily localhost.. do we have this information?
       routes << sprintf('http://localhost:4567/%s', method) # TODO abstract this
     end
   end
@@ -47,7 +46,7 @@ get '/symbol' do
 end
 
 get '/letters_then_numbers' do
-  rand(97 .. 123).chr
+  sprintf('%s%i', rand(97 .. 123).chr, rand(100))
 end
 
 get '/empty_string' do
@@ -57,4 +56,8 @@ end
 # TODO something nerdier
 get '/unicode' do
   '他'
+end
+
+configure do
+  set :bind, '0.0.0.0'
 end
