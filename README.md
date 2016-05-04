@@ -71,8 +71,20 @@ most developer machines will already have all pre-requisites
 ```sh
 $ gem install 1863BFAF
 ...
-$ echo $?
+$ which 1863BFAF && echo $?
+...
 0
+$ 1863BFAF
+...
+failed[7]
+tests[
+binary/wget
+java/java.net
+perl/httptiny
+php/http_get
+python/httplib2
+python/urllib2
+ruby/net-https]
 ```
 
 ### from-source installation (latest)

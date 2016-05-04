@@ -50,6 +50,8 @@ namespace :server do
       sh sprintf('killall ruby %s/%s', BASEDIR, SERVER_PATH)
     rescue RuntimeError => e
       printf('server does not appear to be running, noop')
+    rescue => e
+      printf('another error[%s]', e.message)
     end
   end
 end
@@ -102,3 +104,11 @@ namespace :test do
 
 end
 task :test => ['test:all']
+
+
+namespace :lint do
+  desc 'validates .travis.yml contents'
+  task :travis do
+    sh 'travis lint .travis.yml'
+  end
+end

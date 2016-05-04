@@ -1,7 +1,20 @@
-#!/bin/bash
-echo foo
-exit
+#!/usr/bin/env ruby
 
-rake server:stop # hacky..
-ruby server.rb &
-rake test
+# SOOOOO HACKY
+`ruby resources/server.rb`
+
+#begin
+#  printf('starting server..%s', "\n")
+#  `rake server &`
+#rescue => r
+#  sh sprintf('echo something is very wrong[%s] [%s]', r.class, r.message)
+#end
+
+printf('sleeping 15 for start..%s', "\n")
+`sleep 15`
+
+printf('running tests..%s', "\n")
+`rake test`
+
+printf('stopping server..%s', "\n")
+`rake server:stop`
