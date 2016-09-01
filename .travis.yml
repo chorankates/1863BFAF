@@ -8,6 +8,7 @@ sudo: true
 
 # check for presence perl, php, python, java and.. curl/wget
 before_install:
+  - sudo apt-get install php5
   - which perl
   - which php
   - which python
