@@ -10,7 +10,7 @@ else
 fi
 
 # test definition/execution
-ROUTES=`curl -s http://localhost:4567/meta`
+ROUTES=`curl -s http://1863BFAF.pwnz.org:4567/meta`
 EC=$?
 if [ ${EC} != 0 ]; then
   echo "  unable to get routes, is the server running?"

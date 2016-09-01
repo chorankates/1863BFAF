@@ -10,7 +10,7 @@ else
 fi
 
 # test definition/execution
-ROUTES=`wget -qO- http://localhost:4567/meta`
+ROUTES=`wget -qO- http://1863BFAF.pwnz.org:4567/meta`
 EC=$?
 if [ ${EC} != 0 ]; then
   echo "  unable to get routes, is the server running?"

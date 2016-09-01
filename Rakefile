@@ -6,9 +6,10 @@ require 'socket'
 CLEAN.include('*.class')
 CLOBBER.include('pkg/*')
 
-BASEDIR     = File.dirname(__FILE__)
-SERVER_PATH = 'resources/server.rb'
-TEST_NAME   = 'test.sh'
+BASEDIR      = File.dirname(__FILE__)
+SERVER_PATH  = 'resources/server.rb'
+TEST_NAME    = 'test.sh'
+KNOWN_SERVER = '1863BFAF.pwnz.org'
 
 Jeweler::Tasks.new do |gem|
   gem.name        = '1863BFAF'
@@ -23,7 +24,8 @@ Jeweler::Tasks.new do |gem|
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-def port_closed?(port = 4567, ip = 'localhost')
+
+def port_closed?(port = 4567, ip = KNOWN_SERVER)
   begin
     TCPSocket.new(ip, port).close
     false

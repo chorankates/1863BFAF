@@ -3,7 +3,7 @@
 <?php
 # h/t http://stackoverflow.com/a/17058314
 
-$meta_url = 'http://localhost:4567/meta';
+$meta_url = 'http://1863BFAF.pwnz.org:4567/meta';
 
 # TODO isn't this just shelling out to curl? god this language is absurd
 $ch = curl_init();

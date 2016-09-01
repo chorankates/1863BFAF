@@ -15,7 +15,7 @@ class TestNetHTTP < Test::Unit::TestCase
   end
 
   def setup
-    @server = 'http://localhost:4567'
+    @server = 'http://1863BFAF.pwnz.org:4567'
     @meta_url = sprintf('%s/meta', @server)
 
     begin

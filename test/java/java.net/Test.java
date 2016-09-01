@@ -31,7 +31,7 @@ public class Test {
 
     public static void main(String[] args) throws Exception
     {
-        String meta = getHTML("http://localhost:4567/meta");
+        String meta = getHTML("http://1863BFAF.pwnz.org:4567/meta");
         System.out.println(meta);
 
         // split on , strip quotes and iterate

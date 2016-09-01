@@ -26,7 +26,7 @@ sub get_url {
   return $response;
 }
 
-my $meta_url = 'http://localhost:4567/meta';
+my $meta_url = 'http://1863BFAF.pwnz.org:4567/meta';
 my $meta = get_url($meta_url);
 
 my @urls = split(',', $meta->content);

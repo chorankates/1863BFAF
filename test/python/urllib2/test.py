@@ -4,7 +4,7 @@ import urllib2
 import sys
 import traceback
 
-meta_url = 'http://localhost:4567/meta'
+meta_url = 'http://1863BFAF.pwnz.org:4567/meta'
 meta = urllib2.urlopen(meta_url).read()
 
 urls = meta.split(',')
